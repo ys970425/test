@@ -1,4 +1,34 @@
-export type ScreenState = 'start' | 'userInfo' | 'dilemma' | 'result';
+export type ScreenState = 'start' | 'userInfo' | 'dilemma' | 'result' | 'statistics';
+
+export interface QuestionStat {
+  dilemma_id: number;
+  a_count: number;
+  b_count: number;
+  a_percent: number;
+  b_percent: number;
+}
+
+export interface ProfileStat {
+  profile_code: string;
+  count: number;
+  percent: number;
+}
+
+export interface DistributionStat {
+  label: string;
+  count: number;
+}
+
+export interface SurveyStatisticsData {
+  total_count: number;
+  suppressed: boolean;
+  minimum_group_size: number;
+  question_stats: QuestionStat[];
+  profile_stats: ProfileStat[];
+  age_stats: DistributionStat[];
+  gender_stats: DistributionStat[];
+  role_stats: DistributionStat[];
+}
 
 export type AgeGroup = '10대 이하' | '20대' | '30대' | '40대' | '50대 이상' | '';
 export type Gender = '여성' | '남성' | '기타' | '응답하지 않음' | '';

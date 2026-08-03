@@ -1,15 +1,21 @@
 import React from 'react';
 import { StartIllustration } from './illustrations/StartIllustration';
 import { RumiCharacter } from './illustrations/RumiCharacter';
-import { ArrowRight, Clock, HelpCircle, ShieldCheck, Sparkles } from 'lucide-react';
+import { ArrowRight, BarChart3, Clock, HelpCircle, ShieldCheck, Sparkles } from 'lucide-react';
 
 interface StartScreenProps {
   onStart: () => void;
   hasSavedResult?: boolean;
   onViewSavedResult?: () => void;
+  onViewStatistics?: () => void;
 }
 
-export const StartScreen: React.FC<StartScreenProps> = ({ onStart, hasSavedResult, onViewSavedResult }) => {
+export const StartScreen: React.FC<StartScreenProps> = ({
+  onStart,
+  hasSavedResult,
+  onViewSavedResult,
+  onViewStatistics,
+}) => {
   return (
     <div className="w-full max-w-2xl mx-auto px-4 py-6 sm:py-10 space-y-8 animate-fade-in break-keep">
       {/* Header Badge */}
@@ -87,7 +93,7 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart, hasSavedResul
         </p>
       </div>
 
-      {/* Start Button & Saved Result Shortcut */}
+      {/* Start Button & Statistics & Saved Result Shortcut */}
       <div className="space-y-3 pt-2">
         <button
           id="btn-start-journey"
@@ -97,6 +103,22 @@ export const StartScreen: React.FC<StartScreenProps> = ({ onStart, hasSavedResul
           <span>나의 하루 시작하기</span>
           <ArrowRight className="w-5 h-5" />
         </button>
+
+        {onViewStatistics && (
+          <div className="p-4 bg-indigo-50/70 rounded-2xl border border-indigo-100/80 space-y-2 text-center">
+            <p className="text-xs text-indigo-800 font-semibold">
+              지금까지 참여한 사람들의 선택을 살펴보세요.
+            </p>
+            <button
+              id="btn-view-statistics"
+              onClick={onViewStatistics}
+              className="w-full py-3.5 px-4 bg-white hover:bg-indigo-50 text-indigo-700 font-bold text-sm rounded-xl border border-indigo-200 shadow-2xs hover:shadow-xs transition-all cursor-pointer flex items-center justify-center gap-2"
+            >
+              <BarChart3 className="w-4 h-4 text-indigo-600" />
+              <span>전체 통계 바로 보기</span>
+            </button>
+          </div>
+        )}
 
         {hasSavedResult && onViewSavedResult && (
           <button

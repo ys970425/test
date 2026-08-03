@@ -12,7 +12,8 @@ import { StartScreen } from './components/StartScreen';
 import { UserInfoScreen } from './components/UserInfoScreen';
 import { DilemmaScreen } from './components/DilemmaScreen';
 import { ResultScreen } from './components/ResultScreen';
-import { Sparkles, Heart, Loader2, AlertTriangle, RefreshCw, ArrowRight } from 'lucide-react';
+import { StatisticsScreen } from './components/StatisticsScreen';
+import { Sparkles, Heart, Loader2, AlertTriangle, RefreshCw, ArrowRight, BarChart3 } from 'lucide-react';
 
 const STORAGE_KEY = 'ai_ethics_day_result_v1';
 const DRAFT_STORAGE_KEY = 'ai_ethics_day_draft_v1';
@@ -240,7 +241,7 @@ export default function App() {
             <span className="tracking-tight">AI와 함께 사는 하루</span>
           </button>
 
-          {screen === 'dilemma' && (
+          {screen === 'dilemma' ? (
             <div className="flex items-center gap-2">
               <span className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100/80">
                 {currentDilemma?.time}
@@ -249,6 +250,19 @@ export default function App() {
                 질문 {currentDilemmaIndex + 1} / {DILEMMAS.length}
               </span>
             </div>
+          ) : (
+            <button
+              id="nav-btn-statistics"
+              onClick={() => setScreen('statistics')}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                screen === 'statistics'
+                  ? 'bg-indigo-600 text-white shadow-xs'
+                  : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-100'
+              }`}
+            >
+              <BarChart3 className="w-3.5 h-3.5" />
+              <span>전체 통계</span>
+            </button>
           )}
         </div>
       </header>
@@ -260,6 +274,7 @@ export default function App() {
             onStart={handleStartNew}
             hasSavedResult={hasSavedResult}
             onViewSavedResult={handleViewSaved}
+            onViewStatistics={() => setScreen('statistics')}
           />
         )}
 
@@ -293,6 +308,14 @@ export default function App() {
             resultType={resultType}
             answers={answers}
             onRestart={handleStartNew}
+            onViewStatistics={() => setScreen('statistics')}
+          />
+        )}
+
+        {screen === 'statistics' && (
+          <StatisticsScreen
+            onBack={() => setScreen('start')}
+            onStartSurvey={handleStartNew}
           />
         )}
 

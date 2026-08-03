@@ -15,6 +15,7 @@ import {
 } from 'recharts';
 import {
   Award,
+  BarChart3,
   Calendar,
   Check,
   ChevronDown,
@@ -36,6 +37,7 @@ interface ResultScreenProps {
   resultType: ResultTypeData;
   answers: UserAnswer[];
   onRestart: () => void;
+  onViewStatistics?: () => void;
 }
 
 export const ResultScreen: React.FC<ResultScreenProps> = ({
@@ -44,6 +46,7 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
   resultType,
   answers,
   onRestart,
+  onViewStatistics,
 }) => {
   const [copied, setCopied] = useState(false);
   const [showFullTimeline, setShowFullTimeline] = useState(false);
@@ -426,34 +429,47 @@ export const ResultScreen: React.FC<ResultScreenProps> = ({
         )}
       </div>
 
-      {/* Action Buttons: Share & Retake */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-        <button
-          id="btn-share-result"
-          onClick={handleCopySummary}
-          className="py-4 px-5 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-sm sm:text-base rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-200/60 cursor-pointer"
-        >
-          {copied ? (
-            <>
-              <Check className="w-4 h-4 text-emerald-300" />
-              <span>결과 텍스트 복사 완료!</span>
-            </>
-          ) : (
-            <>
-              <Share2 className="w-4 h-4" />
-              <span>결과 텍스트 공유하기</span>
-            </>
-          )}
-        </button>
+      {/* Action Buttons: Compare in Statistics, Share & Retake */}
+      <div className="space-y-3 pt-2">
+        {onViewStatistics && (
+          <button
+            id="btn-view-stats-from-result"
+            onClick={onViewStatistics}
+            className="w-full py-4 px-5 bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold text-sm sm:text-base rounded-2xl transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-200/60 cursor-pointer"
+          >
+            <BarChart3 className="w-5 h-5 text-indigo-100" />
+            <span>전체 통계에서 내 선택 비교하기</span>
+          </button>
+        )}
 
-        <button
-          id="btn-restart-survey"
-          onClick={onRestart}
-          className="py-4 px-5 bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 font-bold text-sm sm:text-base rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer"
-        >
-          <RefreshCw className="w-4 h-4 text-gray-500" />
-          <span>다시 시뮬레이션 하기</span>
-        </button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <button
+            id="btn-share-result"
+            onClick={handleCopySummary}
+            className="py-3.5 px-5 bg-white hover:bg-gray-50 border border-gray-200 text-gray-800 font-bold text-sm rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            {copied ? (
+              <>
+                <Check className="w-4 h-4 text-emerald-600" />
+                <span>결과 텍스트 복사 완료!</span>
+              </>
+            ) : (
+              <>
+                <Share2 className="w-4 h-4 text-indigo-600" />
+                <span>결과 텍스트 공유하기</span>
+              </>
+            )}
+          </button>
+
+          <button
+            id="btn-restart-survey"
+            onClick={onRestart}
+            className="py-3.5 px-5 bg-white hover:bg-gray-50 border border-gray-200 text-gray-700 font-bold text-sm rounded-2xl transition-all flex items-center justify-center gap-2 cursor-pointer"
+          >
+            <RefreshCw className="w-4 h-4 text-gray-500" />
+            <span>다시 시뮬레이션 하기</span>
+          </button>
+        </div>
       </div>
 
       {/* Mandatory Disclaimer Footer */}
