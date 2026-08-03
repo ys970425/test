@@ -13,6 +13,7 @@ import { UserInfoScreen } from './components/UserInfoScreen';
 import { DilemmaScreen } from './components/DilemmaScreen';
 import { ResultScreen } from './components/ResultScreen';
 import { StatisticsScreen } from './components/StatisticsScreen';
+import { SupabaseStatusButton } from './components/SupabaseStatusButton';
 import { Sparkles, Heart, Loader2, AlertTriangle, RefreshCw, ArrowRight, BarChart3 } from 'lucide-react';
 
 const STORAGE_KEY = 'ai_ethics_day_result_v1';
@@ -241,29 +242,33 @@ export default function App() {
             <span className="tracking-tight">AI와 함께 사는 하루</span>
           </button>
 
-          {screen === 'dilemma' ? (
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100/80">
-                {currentDilemma?.time}
-              </span>
-              <span className="text-xs font-bold text-gray-400">
-                질문 {currentDilemmaIndex + 1} / {DILEMMAS.length}
-              </span>
-            </div>
-          ) : (
-            <button
-              id="nav-btn-statistics"
-              onClick={() => setScreen('statistics')}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
-                screen === 'statistics'
-                  ? 'bg-indigo-600 text-white shadow-xs'
-                  : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-100'
-              }`}
-            >
-              <BarChart3 className="w-3.5 h-3.5" />
-              <span>전체 통계</span>
-            </button>
-          )}
+          <div className="flex items-center gap-2">
+            {screen === 'dilemma' ? (
+              <div className="flex items-center gap-2">
+                <span className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full border border-indigo-100/80">
+                  {currentDilemma?.time}
+                </span>
+                <span className="text-xs font-bold text-gray-400">
+                  질문 {currentDilemmaIndex + 1} / {DILEMMAS.length}
+                </span>
+              </div>
+            ) : (
+              <button
+                id="nav-btn-statistics"
+                onClick={() => setScreen('statistics')}
+                className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all cursor-pointer ${
+                  screen === 'statistics'
+                    ? 'bg-indigo-600 text-white shadow-xs'
+                    : 'bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-100'
+                }`}
+              >
+                <BarChart3 className="w-3.5 h-3.5" />
+                <span>전체 통계</span>
+              </button>
+            )}
+
+            <SupabaseStatusButton />
+          </div>
         </div>
       </header>
 
