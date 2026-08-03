@@ -1,0 +1,6 @@
+{
+  "name": "AI와 함께 사는 하루",
+  "description": "일상 속 8가지 AI 윤리 딜레마를 체험하고 나의 윤리적 가치관과 성향을 알아보는 사용자 참여형 웹 앱",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
